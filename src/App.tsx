@@ -10,7 +10,7 @@ export type tasksType={
   title:string
 }
 export type filterType="All" | "Active" |"Complete"
-type todolistType={
+export type todolistType={
   id:string
   title:string
   filter:filterType
