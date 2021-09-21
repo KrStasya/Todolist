@@ -15,7 +15,7 @@ export type todolistType={
   title:string
   filter:filterType
 }
-type TaskaType= {[key:string] : Array<tasksType>}
+export type TaskaType= {[key:string] : Array<tasksType>}
 
 function App() {
   let todolistID1=v1()
