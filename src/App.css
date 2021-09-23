@@ -1,12 +1,3 @@
 .App {
-  display: flex;
-  padding: 10px;
-}
-.activefilter{
-  background-color: red;
-}
 
-.error{
-  color: red;
- border-color: red;
 }

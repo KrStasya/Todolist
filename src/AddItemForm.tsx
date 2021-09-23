@@ -1,10 +1,11 @@
+import Button from "@material-ui/core/Button";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button} from "./Button";
+import {TextField} from "@material-ui/core";
 
 type AddItemFormType = {
     addItem: (title: string ) => void
-
 }
+
 export function AddItemForm(props: AddItemFormType) {
     let [NewTaskTitle, setNewTaskTitle] = useState("")
     let [error, seterror] = useState<string | null>(null)
@@ -12,7 +13,7 @@ export function AddItemForm(props: AddItemFormType) {
         if (NewTaskTitle.trim() !== "") {
             props.addItem(NewTaskTitle)
             setNewTaskTitle("")
-        } else seterror("Ввидите название покупки")
+        } else seterror("Ввидите данные")
     }
 
     const onChangeAddTask = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,12 +28,18 @@ export function AddItemForm(props: AddItemFormType) {
 
     return (
         <div>
-            <input value={NewTaskTitle}
-                   onChange={onChangeAddTask}
-                   onKeyPress={onKeyPressAddTask}
-                   className={error ? "error" : ""}/>
-            <Button title={"+"} callback={addTask}/>
-            {error && <div className={error ? "error" : ""}>{error}</div>}
+            <TextField variant="standard"
+                      onChange={onChangeAddTask}
+                       onKeyPress={onKeyPressAddTask}
+                       error={!!error}
+                       helperText={error}
+            />
+            <Button onClick={addTask}
+                    variant="contained"
+                    size="small"
+                    color="secondary">{"+"}</Button>
+            {/*<Button title={"+"} callback={addTask}/>*/}
+
         </div>
     )
 }
