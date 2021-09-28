@@ -9,12 +9,14 @@ type AddItemFormType = {
 export function AddItemForm(props: AddItemFormType) {
     let [NewTaskTitle, setNewTaskTitle] = useState("")
     let [error, seterror] = useState<string | null>(null)
+
     const addTask = () => {
         if (NewTaskTitle.trim() !== "") {
             props.addItem(NewTaskTitle)
             setNewTaskTitle("")
         } else seterror("Ввидите данные")
     }
+
 
     const onChangeAddTask = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTaskTitle(e.currentTarget.value)
@@ -33,6 +35,7 @@ export function AddItemForm(props: AddItemFormType) {
                        onKeyPress={onKeyPressAddTask}
                        error={!!error}
                        helperText={error}
+                       value={NewTaskTitle}
             />
             <Button onClick={addTask}
                     variant="contained"
