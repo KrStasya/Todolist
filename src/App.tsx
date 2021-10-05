@@ -132,7 +132,8 @@ function App() {
                                     removeTodolist={removeTodolist}
                                     onChangeNewTitle={onChangeNewTitle}
                                     onChangeNewTaskTitle={onChangeNewTaskTitle}
-                                /></Paper>
+                                />
+                            </Paper>
                         </Grid>
                     })
                 }
