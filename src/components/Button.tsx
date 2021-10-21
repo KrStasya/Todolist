@@ -1,5 +1,5 @@
 import React from "react";
-import {filterType} from "./App";
+import {filterType} from "../state/todolist-reducer";
 
 
 type ButtonPropsType={

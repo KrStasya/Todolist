@@ -1,6 +1,7 @@
-import {TaskaType} from "../App";
+import {TaskaType} from "../AppWithRedux";
 import {addTaskAC, ChangeTaskStatysAC, ChangeTaskTitleAC, removetaskAC, tasksReducer} from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC} from "./todolist-reducer";
+import {TaskPriority, TaskStatus} from "../api/tasks-api";
 
 
 let startState: TaskaType
@@ -8,14 +9,14 @@ let startState: TaskaType
 beforeEach(()=>{
     startState ={
         "todolistID1": [
-            {id: "1", isDone: true, title: "Вино"},
-            {id: "2", isDone: false, title: "Сыр"},
-            {id: "3", isDone: true, title: "Булочка"},
+            {id: "1", status: TaskStatus.Completed, title: "Вино",todoListId:"todolistID1",startDate:"",deadline:"",priority: TaskPriority.Middle,addedDate:"", order: 0,description:""},
+            {id: "2", status: TaskStatus.New, title: "Сыр",todoListId:"todolistID1",startDate:"",deadline:"",priority: TaskPriority.Middle,addedDate:"", order: 0,description:""},
+            {id: "3", status: TaskStatus.Completed, title: "Булочка",todoListId:"todolistID1",startDate:"",deadline:"",priority: TaskPriority.Middle,addedDate:"", order: 0,description:""},
         ],
         "todolistID2": [
-            {id: "1", isDone: true, title: "Вино"},
-            {id: "2", isDone: false, title: "Сыр"},
-            {id: "3", isDone: true, title: "Булочка"},
+            {id: "1", status: TaskStatus.Completed, title: "Вино",todoListId:"todolistID2",startDate:"",deadline:"",priority: TaskPriority.Middle,addedDate:"", order: 0,description:""},
+            {id: "2", status: TaskStatus.New, title: "Сыр",todoListId:"todolistID2",startDate:"",deadline:"",priority: TaskPriority.Middle,addedDate:"", order: 0,description:""},
+            {id: "3", status: TaskStatus.Completed, title: "Булочка",todoListId:"todolistID2",startDate:"",deadline:"",priority: TaskPriority.Middle,addedDate:"", order: 0,description:""},
         ],
     }
 
@@ -37,15 +38,15 @@ test('new task should be added', () => {
     expect(endState['todolistID2'].length).toBe(3)
     expect(endState['todolistID1'][0].id).toBeDefined()
     expect(endState['todolistID1'][0].title).toBe("Soup")
-    expect(endState['todolistID1'][0].isDone).toBe(false)
+    expect(endState['todolistID1'][0].status).toBe(TaskStatus.New)
 });
 
 test('statys should be changed', () => {
 
-    const endState = tasksReducer(startState, ChangeTaskStatysAC("todolistID1",false,"1"))
+    const endState = tasksReducer(startState, ChangeTaskStatysAC("todolistID1",TaskStatus.New, "1"))
 
-    expect(endState['todolistID1'][0].isDone).toBe(false)
-    expect(endState['todolistID2'][0].isDone).toBe(true)
+    expect(endState['todolistID1'][0].status).toBe(TaskStatus.New)
+    expect(endState['todolistID2'][0].status).toBe(TaskStatus.Completed)
 
 });
 

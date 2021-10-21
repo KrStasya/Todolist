@@ -1,19 +1,26 @@
 import {v1} from "uuid";
-import {filterType, todolistType} from "../App";
-import {addTodolistAC, ChangeTodolistFilterAC, ChangeTodolistTitleAC, removeTodolistAC, todolistReducer} from "./todolist-reducer";
+import {
+    addTodolistAC,
+    ChangeTodolistFilterAC,
+    ChangeTodolistTitleAC, filterType,
+    removeTodolistAC,
+    TodolistDomainType,
+    todolistReducer
+} from "./todolist-reducer";
+
 
 let todolistID1: string
 let todolistID2: string
 
-let startState: Array<todolistType>
+let startState: Array<TodolistDomainType>
 
 beforeEach(()=>{
      todolistID1 = v1()
     todolistID2 = v1()
 
     startState = [
-        {id: todolistID1, title: "Список покупок", filter: "All"},
-        {id: todolistID2, title: "Список дел", filter: "All"}
+        {id: todolistID1, title: "Список покупок", filter: "All",order:0,addedDate:""},
+        {id: todolistID2, title: "Список дел", filter: "All",order:0,addedDate:""}
     ]
 
 })
@@ -31,9 +38,9 @@ test('new todolist should be added', () => {
 
     let newTodolistTitle = "New Todolist";
 
-    const startState: Array<todolistType> = [
-        {id: todolistID1, title: "Список покупок", filter: "All"},
-        {id: todolistID2, title: "Список дел", filter: "All"}
+    const startState: Array<TodolistDomainType> = [
+        {id: todolistID1, title: "Список покупок", filter: "All",order:0,addedDate:""},
+        {id: todolistID2, title: "Список дел", filter: "All",order:0,addedDate:""}
     ]
 
     const endState = todolistReducer(startState, addTodolistAC (newTodolistTitle))
