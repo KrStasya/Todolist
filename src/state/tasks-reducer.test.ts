@@ -43,7 +43,7 @@ test('new task should be added', () => {
 
 test('statys should be changed', () => {
 
-    const endState = tasksReducer(startState, ChangeTaskStatysAC("todolistID1",TaskStatus.New, "1"))
+    const endState = tasksReducer(startState, ChangeTaskStatysAC("todolistID1", "1",TaskStatus.New))
 
     expect(endState['todolistID1'][0].status).toBe(TaskStatus.New)
     expect(endState['todolistID2'][0].status).toBe(TaskStatus.Completed)

@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {TaskStatus, tasksType} from "./api/tasks-api";
 import {AddItemForm} from "./components/AddItemForm";
 import {Editablespan} from "./components/Editablespan";
@@ -6,6 +6,8 @@ import {Button, IconButton} from "@material-ui/core";
 import {DeleteForeverTwoTone} from "@material-ui/icons";
 import {Task} from "./components/Task";
 import {filterType} from "./state/todolist-reducer";
+import {setTaskTC} from "./state/tasks-reducer";
+import {useDispatch} from "react-redux";
 
 
 
@@ -17,7 +19,7 @@ type TodolistPropsType = {
     tasks: Array<tasksType>
     ChangeFilter: (filter: filterType, todolistID: string) => void
     removetask: (id: string, todolistID: string) => void
-    changeChecked: (id: string, status: TaskStatus, todolistID: string) => void
+    changeChecked: (todolistID: string, id: string,status: TaskStatus,) => void
     onChangeNewTitle: (id: string, newtitle: string, todolistID: string) => void
 
     addTask: (title: string, todolistID: string) => void
@@ -26,6 +28,12 @@ type TodolistPropsType = {
 }
 
 export function Todolist(props: TodolistPropsType) {
+
+    const dispatch=useDispatch()
+
+    useEffect(()=>{
+        dispatch(setTaskTC(props.todolistID))
+    },[])
 
     const SetAll = useCallback(() => {
         props.ChangeFilter("All", props.todolistID)

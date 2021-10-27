@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 import {AddItemForm} from "./components/AddItemForm";
@@ -11,29 +11,27 @@ import {
     ChangeTodolistFilterAC,
     ChangeTodolistTitleAC,
     filterType,
-    removeTodolistAC, TodolistDomainType
+    removeTodolistAC, setTodolistTC, TodolistDomainType
 } from "./state/todolist-reducer";
-import {addTaskAC, ChangeTaskStatysAC, ChangeTaskTitleAC, removetaskAC} from "./state/tasks-reducer";
+import {
+    addTaskAC,
+    addTaskTC,
+    ChangeTaskStatysAC,
+    ChangeTaskTitleAC,
+    removetaskAC,
+    removetaskTC, updateTaskStatusTC
+} from "./state/tasks-reducer";
 import {TaskStatus, tasksType} from './api/tasks-api';
-import { todolistType } from './api/todolist-api';
 
 
-/*export type tasksType = {
-    id: string
-    isDone: boolean
-    title: string
-}*/
-
-/*export type todolistType = {
-    id: string
-    title: string
-    filter: filterType
-}*/
 export type TaskaType = { [key: string]: Array<tasksType> }
 
 function AppWithRedux() {
 
-    console.log("AppWithRedux")
+    useEffect(()=>{
+        dispatch(setTodolistTC())
+    },[])
+
     const dispatch=useDispatch()
     const todolist=useSelector<AppRootType,Array<TodolistDomainType>>(state => state.todolists)
     const tasks=useSelector<AppRootType,TaskaType>(state => state.tasks)
@@ -60,17 +58,17 @@ function AppWithRedux() {
 
 
     const removetask=useCallback((todolistID: string, id: string,)=> {
-        dispatch(removetaskAC(todolistID,id))
+        dispatch(removetaskTC(todolistID,id))
        // settasks({...tasks, [todolistID]: tasks[todolistID].filter(t => t.id !== id)})
     },[dispatch])
 
-    const changeChecked=useCallback((id: string, status: TaskStatus, todolistID: string)=> {
-        dispatch(ChangeTaskStatysAC(todolistID,status,id))
+    const changeChecked=useCallback((todolistID: string, id: string, status: TaskStatus)=> {
+        dispatch(updateTaskStatusTC(todolistID,id,status))
         //settasks({...tasks, [todolistID]: tasks[todolistID].map(m => m.id === id ? {...m, isDone: isDone} : m)})
-    },[dispatch])
+    },[])
 
     const addTask=useCallback((title: string, todolistID: string)=> {
-        dispatch(addTaskAC(todolistID,title))
+        dispatch(addTaskTC(todolistID,title))
         //settasks({...tasks, [todolistID]: [{id: v1(), isDone: false, title: title.trim()}, ...tasks[todolistID]]})
 
     },[dispatch])

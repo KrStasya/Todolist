@@ -8,14 +8,14 @@ type TaskPropsType = {
     task: tasksType
     todolistID: string
     removetask: (id: string, todolistID: string) => void
-    changeChecked: (id: string, status: TaskStatus, todolistID: string) => void
+    changeChecked: (todolistID: string, id: string,status: TaskStatus) => void
     onChangeNewTitle: (id: string, newtitle: string, todolistID: string) => void
 }
 export const Task =React.memo( (props: TaskPropsType) => {
     console.log("Task")
     const removetask = () => props.removetask(props.todolistID, props.task.id)
     const changeChecked = (e: ChangeEvent<HTMLInputElement>) => {
-        props.changeChecked(props.task.id, e.currentTarget.checked?TaskStatus.Completed:TaskStatus.New, props.todolistID)
+        props.changeChecked(props.todolistID, props.task.id, e.currentTarget.checked? TaskStatus.Completed:TaskStatus.New)
     }
     const onChangeNewTitle =useCallback( (newtitle: string,) => {
         props.onChangeNewTitle(props.task.id, newtitle, props.todolistID)

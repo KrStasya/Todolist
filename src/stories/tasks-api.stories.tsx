@@ -85,12 +85,10 @@ export const UpdateTaskTitle = () => {
     const [priority, setpriority] = useState<number>(0)
     const [startDate, setstartDate] = useState<string>("")
     const [deadline, setdeadline] = useState<string>("")
-   //let todolistId="00b51838-46e0-4f3c-8a86-289d8f2054ee"
-   // let taskId="1b4560b0-2987-4644-8c0b-12cbb0e03d32"
-    //let newTitle="5"
+
 
     const changeTask=()=>{
-        tasksApi.updateTaskTitle(todolistId,taskId,{
+        tasksApi.updateTask(todolistId,taskId,{
             description: description,
             startDate: "",
             title: newTitle,
