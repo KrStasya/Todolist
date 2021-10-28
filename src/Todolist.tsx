@@ -20,7 +20,7 @@ type TodolistPropsType = {
     ChangeFilter: (filter: filterType, todolistID: string) => void
     removetask: (id: string, todolistID: string) => void
     changeChecked: (todolistID: string, id: string,status: TaskStatus,) => void
-    onChangeNewTitle: (id: string, newtitle: string, todolistID: string) => void
+    onChangeNewTitle: (todolistID: string,id: string, newtitle: string) => void
 
     addTask: (title: string, todolistID: string) => void
     removeTodolist: (todolistID: string) => void

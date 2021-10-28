@@ -7,19 +7,16 @@ import {Menu} from "@material-ui/icons"
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "./state/store";
 import {
-    addTodolistAC,
+     addTodolistTC,
     ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC,
+     ChangeTodolistTitleTC,
     filterType,
-    removeTodolistAC, setTodolistTC, TodolistDomainType
+     removeTodolistTC, setTodolistTC, TodolistDomainType
 } from "./state/todolist-reducer";
 import {
-    addTaskAC,
+
     addTaskTC,
-    ChangeTaskStatysAC,
-    ChangeTaskTitleAC,
-    removetaskAC,
-    removetaskTC, updateTaskStatusTC
+    removetaskTC, updateTaskStatusTC, updateTaskTitleTC
 } from "./state/tasks-reducer";
 import {TaskStatus, tasksType} from './api/tasks-api';
 
@@ -41,18 +38,18 @@ function AppWithRedux() {
         //settodolist(todolist.map(m => todolistID === m.id ? {...m, filter: filter} : m))
     },[dispatch])
     const removeTodolist=useCallback((todolistID: string)=> {
-        dispatch(removeTodolistAC(todolistID))
+        dispatch(removeTodolistTC(todolistID))
         //settodolist(todolist.filter(m => m.id !== todolistID))
         /*  delete tasks[todolistID]
           settasks({...tasks})*/
     },[dispatch])
     const AddNewTodolist=useCallback((title: string)=>{
-        dispatch(addTodolistAC(title))
+        dispatch(addTodolistTC(title))
        // settodolist([{id: todolistID3, title: title, filter: "All"}, ...todolist])
         //settasks({...tasks, [todolistID3]: []})
     },[dispatch])
     const onChangeNewTaskTitle=useCallback((todolistID: string, newtitle: string)=>{
-        dispatch(ChangeTodolistTitleAC(todolistID,newtitle))
+        dispatch(ChangeTodolistTitleTC(todolistID,newtitle))
         //settodolist(todolist.map(m => m.id === todolistID ? {...m, title: newtitle} : m))
     },[dispatch])
 
@@ -73,8 +70,8 @@ function AppWithRedux() {
 
     },[dispatch])
 
-    const onChangeNewTitle=useCallback((id: string, newtitle: string, todolistID: string)=> {
-        dispatch(ChangeTaskTitleAC(todolistID,newtitle,id))
+    const onChangeNewTitle=useCallback((todolistID: string,id: string, newtitle: string)=> {
+        dispatch(updateTaskTitleTC(todolistID,id,newtitle))
         //settasks({...tasks, [todolistID]: tasks[todolistID].map(m => m.id === id ? {...m, title: newtitle} : m)})
     },[dispatch])
 
