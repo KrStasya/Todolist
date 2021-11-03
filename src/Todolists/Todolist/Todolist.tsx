@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect} from "react";
-import {TaskStatus, tasksType} from "./api/tasks-api";
-import {AddItemForm} from "./components/AddItemForm";
-import {Editablespan} from "./components/Editablespan";
+import {TaskStatus, tasksType} from "../../api/tasks-api";
+import {AddItemForm} from "../../components/AddItemForm";
+import {Editablespan} from "../../components/Editablespan";
 import {Button, IconButton} from "@material-ui/core";
 import {DeleteForeverTwoTone} from "@material-ui/icons";
-import {Task} from "./components/Task";
-import {filterType} from "./state/todolist-reducer";
-import {setTaskTC} from "./state/tasks-reducer";
+import {Task} from "../../components/Task";
+import {filterType} from "../../state/todolist-reducer";
+import {setTaskTC} from "../../state/tasks-reducer";
 import {useDispatch} from "react-redux";
 
 
