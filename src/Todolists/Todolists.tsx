@@ -12,10 +12,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "../state/store";
 import {addTaskTC, removetaskTC, updateTaskStatusTC, updateTaskTitleTC} from "../state/tasks-reducer";
 import {TaskStatus} from "../api/tasks-api";
-import {Grid, Paper} from "@material-ui/core";
-import {AddItemForm} from "../components/AddItemForm";
+
+import {AddItemForm} from "../components/AddItemForm/AddItemForm";
 import {TaskaType} from "../AppWithRedux";
 import { Todolist } from "./Todolist/Todolist";
+import Grid from "@mui/material/Grid/Grid";
+import {Paper} from "@mui/material";
 
 export const Todolists: React.FC = () => {
 
@@ -71,6 +73,7 @@ export const Todolists: React.FC = () => {
                         <Todolist
                             todolistID={m.id}
                             title={m.title}
+                            entityStatus={m.entityStatus}
                             tasks={filteredTasks}
                             ChangeFilter={ChangeFilter}
                             filter={m.filter}

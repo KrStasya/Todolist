@@ -2,11 +2,14 @@ import React, {useState} from 'react';
 import {v1} from 'uuid';
 import '../App.css';
 import {Todolist} from "../Todolists/Todolist/Todolist";
-import {AddItemForm} from "../components/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
-import {Menu} from "@material-ui/icons"
+import {AddItemForm} from "../components/AddItemForm/AddItemForm";
 import {TaskPriority, TaskStatus, tasksType} from "../api/tasks-api";
 import {filterType, TodolistDomainType} from "../state/todolist-reducer";
+import AppBar from '@mui/material/AppBar/AppBar';
+import IconButton from "@mui/material/IconButton/IconButton";
+import {Button, Container, Grid, Paper, Toolbar, Typography} from "@mui/material";
+import {Menu} from "@mui/icons-material";
+import {RequestStatusType} from "../state/app-reducer";
 
 
 
@@ -33,8 +36,8 @@ function App() {
 
 
     let [todolist, settodolist] = useState<Array<TodolistDomainType>>([
-        {id: todolistID1, title: "Список покупок", filter: "All",addedDate:"",order:0},
-        {id: todolistID2, title: "Список дел", filter: "All",addedDate:"",order:0}
+        {id: todolistID1, title: "Список покупок", filter: "All",addedDate:"",order:0,entityStatus: "idle"},
+        {id: todolistID2, title: "Список дел", filter: "All",addedDate:"",order:0, entityStatus: "idle"}
     ])
 
     function ChangeFilter(filter: filterType, todolistID: string) {
@@ -62,7 +65,7 @@ function App() {
     }
 
     function AddNewTodolist(title: string) {
-        settodolist([{id: todolistID3, title: title, filter: "All",addedDate:"",order:0}, ...todolist])
+        settodolist([{id: todolistID3, title: title, filter: "All",addedDate:"",order:0, entityStatus: "idle"}, ...todolist])
         settasks({...tasks, [todolistID3]: []})
     }
 
@@ -111,6 +114,7 @@ function App() {
                                     key={m.id}
                                     todolistID={m.id}
                                     title={m.title}
+                                    entityStatus={m.entityStatus}
                                     tasks={filteredTasks}
                                     ChangeFilter={ChangeFilter}
                                     filter={m.filter}

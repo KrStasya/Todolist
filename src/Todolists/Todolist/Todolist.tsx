@@ -1,13 +1,15 @@
 import React, {useCallback, useEffect} from "react";
 import {TaskStatus, tasksType} from "../../api/tasks-api";
-import {AddItemForm} from "../../components/AddItemForm";
-import {Editablespan} from "../../components/Editablespan";
-import {Button, IconButton} from "@material-ui/core";
-import {DeleteForeverTwoTone} from "@material-ui/icons";
+import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
+import {Editablespan} from "../../components/Editablespan/Editablespan";
 import {Task} from "../../components/Task";
 import {filterType} from "../../state/todolist-reducer";
 import {setTaskTC} from "../../state/tasks-reducer";
 import {useDispatch} from "react-redux";
+import IconButton from "@mui/material/IconButton/IconButton";
+import {DeleteForeverTwoTone} from "@mui/icons-material";
+import Button from "@mui/material/Button";
+import {RequestStatusType} from "../../state/app-reducer";
 
 
 
@@ -16,6 +18,7 @@ type TodolistPropsType = {
     title: string
     todolistID: string
     filter: filterType
+    entityStatus: RequestStatusType
     tasks: Array<tasksType>
     ChangeFilter: (filter: filterType, todolistID: string) => void
     removetask: (id: string, todolistID: string) => void
@@ -66,10 +69,12 @@ export function Todolist(props: TodolistPropsType) {
 
     return (
         <div>
-            <h3><Editablespan title={props.title} onChangeNewTitle={onChangeNewTaskTitle}/> <IconButton
-                onClick={removeTodolist}><DeleteForeverTwoTone/></IconButton> {/*<Button title={"X"} callback={removeTodolist}/>*/}
+            <h3><Editablespan title={props.title} onChangeNewTitle={onChangeNewTaskTitle}/>
+                <IconButton onClick={removeTodolist} disabled={props.entityStatus==="loading"}>
+                    <DeleteForeverTwoTone/>
+                </IconButton> {/*<Button title={"X"} callback={removeTodolist}/>*/}
             </h3>
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask} disabled={props.entityStatus==="loading"}/>
             <div>
                     {
                         filteredTasks.map(m => <Task

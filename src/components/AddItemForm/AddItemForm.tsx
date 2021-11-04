@@ -1,9 +1,12 @@
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField/TextField";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {TextField} from "@material-ui/core";
+
+
 
 type AddItemFormType = {
     addItem: (title: string ) => void
+    disabled?: boolean
 }
 
 export const AddItemForm= React.memo((props: AddItemFormType)=>{
@@ -38,11 +41,13 @@ console.log("AddItemForm")
                        error={!!error}
                        helperText={error}
                        value={NewTaskTitle}
+                       disabled={props.disabled}
             />
             <Button onClick={addTask}
                     variant="contained"
                     size="small"
-                    color="secondary">{"+"}</Button>
+                    color="secondary"
+                    disabled={props.disabled}>{"+"}</Button>
             {/*<Button title={"+"} callback={addTask}/>*/}
 
         </div>

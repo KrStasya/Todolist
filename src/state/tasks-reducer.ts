@@ -3,6 +3,8 @@ import {addTodolistAC, removeTodolistAC, SetTodolistType} from "./todolist-reduc
 import {changeModel, tasksApi, TaskStatus, tasksType} from "../api/tasks-api";
 import {Dispatch} from "redux";
 import {AppRootType} from "./store";
+import {setAppErrorAC, setAppErrorType, setAppStatusAC, setAppStatusType} from "./app-reducer";
+import {AxiosError} from "axios";
 
 const initialState:TaskaType={}
 
@@ -62,22 +64,42 @@ export const setTasksAC=(todolistId:string,tasks:Array<tasksType>) =>{
 
 //thunks
 export const setTaskTC=(todolistId:string)=>(dispatch: Dispatch<ActionType>)=>{
+    dispatch(setAppStatusAC('loading'))
     tasksApi.getTasks(todolistId)
         .then((res)=>{
             dispatch(setTasksAC( todolistId, res.data.items))
+            dispatch(setAppStatusAC('succeeded'))
         })
 }
 export const removetaskTC=(todolistID: string, taskID:string)=> (dispatch: Dispatch<ActionType>)=>{
+    dispatch(setAppStatusAC('loading'))
         tasksApi.deleteTask(todolistID,taskID)
             .then((res)=>{
                 dispatch(removetaskAC(todolistID,taskID))
+                dispatch(setAppStatusAC('succeeded'))
             })
 }
 export const addTaskTC=(todolistId:string, title:string)=> (dispatch: Dispatch<ActionType>)=>{
+    dispatch(setAppStatusAC('loading'))
         tasksApi.createTask(todolistId,title)
             .then((res)=>{
-                dispatch(addTaskAC(res.data.data.item))
+                if (res.data.resultCode===0) {
+                    dispatch(addTaskAC(res.data.data.item))
+                    dispatch(setAppStatusAC('succeeded'))
+                } else{
+                    if (res.data.messages.length) {
+                        dispatch(setAppErrorAC(res.data.messages[0]))
+                    } else {
+                        dispatch(setAppErrorAC('some error'))
+                    }
+                    dispatch(setAppStatusAC('failed'))
+                }
             })
+            .catch((res:AxiosError)=>{
+                    dispatch(setAppErrorAC(res.message))
+                    dispatch(setAppStatusAC('failed'))
+            })
+
 }
 export const updateTaskStatusTC = (todolistId: string,taskId: string, status: TaskStatus) => (dispatch: Dispatch<ActionType>, getState: () =>AppRootType) => {
         const allTasksFromState = getState().tasks;
@@ -131,7 +153,9 @@ type ActionType =
     AddTodolistActionType |
     RemoveTodolistActionType |
     SetTodolistType|
-    setTasksActionType
+    setTasksActionType |
+     setAppStatusType |
+    setAppErrorType
 
 type removetasksActionType = ReturnType<typeof removetaskAC>
 type addTaskACActionType = ReturnType<typeof addTaskAC>
