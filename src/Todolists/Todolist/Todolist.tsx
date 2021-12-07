@@ -5,11 +5,12 @@ import {Editablespan} from "../../components/Editablespan/Editablespan";
 import {Task} from "../../components/Task";
 import {filterType} from "../../state/todolist-reducer";
 import {setTaskTC} from "../../state/tasks-reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import IconButton from "@mui/material/IconButton/IconButton";
 import {DeleteForeverTwoTone} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import {RequestStatusType} from "../../state/app-reducer";
+import {AppRootType} from "../../state/store";
 
 
 

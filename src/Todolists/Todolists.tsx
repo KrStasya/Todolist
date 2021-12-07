@@ -18,16 +18,22 @@ import {TaskaType} from "../AppWithRedux";
 import { Todolist } from "./Todolist/Todolist";
 import Grid from "@mui/material/Grid/Grid";
 import {Paper} from "@mui/material";
+import {Navigate} from "react-router-dom";
 
 export const Todolists: React.FC = () => {
-
-    useEffect(() => {
-        dispatch(setTodolistTC())
-    }, [])
 
     const dispatch = useDispatch()
     const todolist = useSelector<AppRootType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootType, TaskaType>(state => state.tasks)
+    const isLoggedIn=useSelector<AppRootType,boolean>(state => state.auth.isLoggedIn)
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+            return;
+        }
+        dispatch(setTodolistTC())
+    }, [])
+
 
     const ChangeFilter = useCallback((filter: filterType, todolistID: string) => {
         dispatch(ChangeTodolistFilterAC(todolistID, filter))
@@ -41,7 +47,6 @@ export const Todolists: React.FC = () => {
     const onChangeNewTaskTitle = useCallback((todolistID: string, newtitle: string) => {
         dispatch(ChangeTodolistTitleTC(todolistID, newtitle))
     }, [dispatch])
-
 
     const removetask = useCallback((todolistID: string, id: string,) => {
         dispatch(removetaskTC(todolistID, id))
@@ -59,6 +64,9 @@ export const Todolists: React.FC = () => {
         dispatch(updateTaskTitleTC(todolistID, id, newtitle))
     }, [dispatch])
 
+if (!isLoggedIn) {
+    return <Navigate to={'/login'}/>
+}
 
     return <>
         <Grid container style={{padding: "20px"}}>
