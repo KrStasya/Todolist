@@ -3,7 +3,7 @@ import {addTodolistAC, removeTodolistAC, SetTodolistType} from "./todolist-reduc
 import {changeModel, tasksApi, TaskStatus, tasksType} from "../api/tasks-api";
 import {Dispatch} from "redux";
 import {AppRootType} from "./store";
-import {setAppErrorAC, setAppErrorType, setAppStatusAC, setAppStatusType} from "./app-reducer";
+import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
 import {AxiosError} from "axios";
 
 const initialState:TaskaType={}
@@ -63,45 +63,45 @@ export const setTasksAC=(todolistId:string,tasks:Array<tasksType>) =>{
 }
 
 //thunks
-export const setTaskTC=(todolistId:string)=>(dispatch: Dispatch<ActionType>)=>{
-    dispatch(setAppStatusAC('loading'))
+export const setTaskTC=(todolistId:string)=>(dispatch: Dispatch)=>{
+    dispatch(setAppStatusAC({status: 'loading'}))
     tasksApi.getTasks(todolistId)
         .then((res)=>{
             dispatch(setTasksAC( todolistId, res.data.items))
-            dispatch(setAppStatusAC('succeeded'))
+            dispatch(setAppStatusAC({status: 'succeeded'}))
         })
 }
-export const removetaskTC=(todolistID: string, taskID:string)=> (dispatch: Dispatch<ActionType>)=>{
-    dispatch(setAppStatusAC('loading'))
+export const removetaskTC=(todolistID: string, taskID:string)=> (dispatch: Dispatch)=>{
+    dispatch(setAppStatusAC({status: 'loading'}))
         tasksApi.deleteTask(todolistID,taskID)
             .then((res)=>{
                 dispatch(removetaskAC(todolistID,taskID))
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC({status: 'succeeded'}))
             })
 }
-export const addTaskTC=(todolistId:string, title:string)=> (dispatch: Dispatch<ActionType>)=>{
-    dispatch(setAppStatusAC('loading'))
+export const addTaskTC=(todolistId:string, title:string)=> (dispatch: Dispatch)=>{
+    dispatch(setAppStatusAC({status: 'loading'}))
         tasksApi.createTask(todolistId,title)
             .then((res)=>{
                 if (res.data.resultCode===0) {
                     dispatch(addTaskAC(res.data.data.item))
-                    dispatch(setAppStatusAC('succeeded'))
+                    dispatch(setAppStatusAC({status: 'succeeded'}))
                 } else{
                     if (res.data.messages.length) {
-                        dispatch(setAppErrorAC(res.data.messages[0]))
+                        dispatch(setAppErrorAC({error: res.data.messages[0]}))
                     } else {
-                        dispatch(setAppErrorAC('some error'))
+                        dispatch(setAppErrorAC({error: 'some error'}))
                     }
-                    dispatch(setAppStatusAC('failed'))
+                    dispatch(setAppStatusAC({status: 'failed'}))
                 }
             })
             .catch((res:AxiosError)=>{
-                    dispatch(setAppErrorAC(res.message))
-                    dispatch(setAppStatusAC('failed'))
+                    dispatch(setAppErrorAC({error: res.message}))
+                    dispatch(setAppStatusAC({status: 'failed'}))
             })
 
 }
-export const updateTaskStatusTC = (todolistId: string,taskId: string, status: TaskStatus) => (dispatch: Dispatch<ActionType>, getState: () =>AppRootType) => {
+export const updateTaskStatusTC = (todolistId: string,taskId: string, status: TaskStatus) => (dispatch: Dispatch, getState: () =>AppRootType) => {
         const allTasksFromState = getState().tasks;
        const tasksForCurrentTodolist = allTasksFromState[todolistId]
 
@@ -122,7 +122,7 @@ export const updateTaskStatusTC = (todolistId: string,taskId: string, status: Ta
                 dispatch(ChangeTaskStatysAC(todolistId,taskId,status))
            })}
 }
-export const updateTaskTitleTC = (todolistId: string,taskId: string, title: string) => (dispatch: Dispatch<ActionType>, getState: () =>AppRootType) => {
+export const updateTaskTitleTC = (todolistId: string,taskId: string, title: string) => (dispatch: Dispatch, getState: () =>AppRootType) => {
         const allTasksFromState = getState().tasks;
         const tasksForCurrentTodolist = allTasksFromState[todolistId]
 
@@ -153,9 +153,7 @@ type ActionType =
     AddTodolistActionType |
     RemoveTodolistActionType |
     SetTodolistType|
-    setTasksActionType |
-     setAppStatusType |
-    setAppErrorType
+    setTasksActionType
 
 type removetasksActionType = ReturnType<typeof removetaskAC>
 type addTaskACActionType = ReturnType<typeof addTaskAC>

@@ -1,22 +1,24 @@
-import {setAppErrorAC, setAppErrorType, setAppStatusAC, setAppStatusType} from "../state/app-reducer";
+import {setAppErrorAC, setAppStatusAC} from "../state/app-reducer";
 import {Dispatch} from "redux";
 import {CommonResponseType} from "../api/todolist-api";
+import {Simulate} from "react-dom/test-utils";
 
 
-export const handleServerAppError=<T>(dispatch:Dispatch<ErrorUtilsActionsType>,data:CommonResponseType<T>)=>{
+
+export const handleServerAppError=<T>(dispatch:Dispatch,data:CommonResponseType<T>)=>{
     if (data.messages.length) {
-        dispatch(setAppErrorAC(data.messages[0]))
+        dispatch(setAppErrorAC({error: data.messages[0]}))
     } else {
-        dispatch(setAppErrorAC('some error'))
+        dispatch(setAppErrorAC({error: 'some error'}))
     }
-    dispatch(setAppStatusAC('failed'))
+    dispatch(setAppStatusAC({ status:'failed'}))
 }
 
 
 
-export const handleServerNetworkError=(dispatch:Dispatch<ErrorUtilsActionsType>, message:string)=>{
-    dispatch(setAppErrorAC(message))
-    dispatch(setAppStatusAC('failed'))
+export const handleServerNetworkError=(dispatch:Dispatch, message:string)=>{
+    dispatch(setAppErrorAC({error: message}))
+    dispatch(setAppStatusAC({status: 'failed'}))
 }
 
-type ErrorUtilsActionsType= setAppStatusType | setAppErrorType
+//type ErrorUtilsActionsType= setAppStatusType | setAppErrorType
