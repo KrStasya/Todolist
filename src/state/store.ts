@@ -22,7 +22,10 @@ export const store = configureStore({
         getDefaultMiddleware()
             .prepend(thunk)
 })
+export type AppRootStateType = ReturnType<typeof rootReducer>
 // @ts-ignore
 window.store=store
+
+
 
 

@@ -1,7 +1,6 @@
 import {setAppErrorAC, setAppStatusAC} from "../state/app-reducer";
 import {Dispatch} from "redux";
 import {CommonResponseType} from "../api/todolist-api";
-import {Simulate} from "react-dom/test-utils";
 
 
 

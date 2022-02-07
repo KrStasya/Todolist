@@ -4,14 +4,14 @@ import AppWithRedux from "../AppWithRedux";
 import {ReduxStoreProviderDecorator} from "./ decorators/ReduxStoreProviderDecorator";
 import {Provider} from "react-redux";
 import {store} from "../state/store";
-
+import StoryRouter from 'storybook-react-router';
 
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
     title: 'AppWithRedux',
     component: AppWithRedux,
-    decorators:[ReduxStoreProviderDecorator]
+    decorators:[ReduxStoreProviderDecorator,StoryRouter()]
     // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as ComponentMeta<typeof AppWithRedux>;
 

@@ -9,12 +9,14 @@ import {BrowserRouter} from "react-router-dom";
 
 
 ReactDOM.render(
-    <BrowserRouter><Provider store={store}>
-        <AppWithRedux/>
+    <Provider store={store}>
+        <BrowserRouter>
+            <AppWithRedux/>
+        </BrowserRouter>,
     </Provider>,
-    </BrowserRouter>,
 
-document.getElementById('root')
+
+    document.getElementById('root')
 )
 ;
 
@@ -22,3 +24,4 @@ document.getElementById('root')
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
