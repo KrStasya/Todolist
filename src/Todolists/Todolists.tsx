@@ -10,7 +10,7 @@ import {
 } from "../state/todolist-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootType} from "../state/store";
-import {addTaskTC, removetaskTC, updateTaskStatusTC, updateTaskTitleTC} from "../state/tasks-reducer";
+import {addTaskTC, removetaskTC, updateTaskTC} from "../state/tasks-reducer";
 import {TaskStatus} from "../api/tasks-api";
 
 import {AddItemForm} from "../components/AddItemForm/AddItemForm";
@@ -53,16 +53,17 @@ export const Todolists: React.FC = () => {
     }, [dispatch])
 
     const changeChecked = useCallback((todolistID: string, id: string, status: TaskStatus) => {
-        dispatch(updateTaskStatusTC(todolistID, id, status))
+        dispatch(updateTaskTC(todolistID, id, {status}))
     }, [])
 
     const addTask = useCallback((title: string, todolistId: string) => {
         dispatch(addTaskTC({todolistId, title}))
     }, [dispatch])
 
-    const onChangeNewTitle = useCallback((todolistID: string, id: string, newtitle: string) => {
-        dispatch(updateTaskTitleTC(todolistID, id, newtitle))
+    const onChangeNewTitle = useCallback((todolistID: string, id: string, newTitle: string) => {
+        dispatch(updateTaskTC(todolistID, id, {title: newTitle}))
     }, [dispatch])
+
 
 if (!isLoggedIn) {
     return <Navigate to={'/login'}/>
