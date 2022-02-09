@@ -1,13 +1,12 @@
 import {TaskaType} from "../AppWithRedux";
 import {
     addTaskTC,
-    ChangeTaskStatysAC,
-    ChangeTaskTitleAC, removetaskTC,
+    removetaskTC,
     setTaskTC,
-    tasksReducer
+    tasksReducer, updateTaskTC
 } from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, setTodolistAC} from "./todolist-reducer";
-import {TaskPriority, TaskStatus, tasksType} from "../api/tasks-api";
+import { TaskPriority, TaskStatus, tasksType} from "../api/tasks-api";
 
 
 let startState: TaskaType
@@ -38,9 +37,20 @@ test('correct task should be removed', () => {
 });
 
 test('new task should be added', () => {
-const newTask:tasksType={id: "4", status: TaskStatus.New, title: "Soup",todoListId:"todolistID1",startDate:"",deadline:"",priority: TaskPriority.Middle,addedDate:"", order: 0,description:""}
+const newTask:tasksType={
+    id: "4",
+    status: TaskStatus.New,
+    title: "Soup",
+    todoListId:"todolistID1",
+    startDate:"",
+    deadline:"",
+    priority: TaskPriority.Middle,
+    addedDate:"",
+    order: 0,
+    description:""
+}
 
-    const endState = tasksReducer(startState, addTaskTC.fulfilled({task:newTask},'',{todolistId:newTask.id, title:newTask.title}))
+    const endState = tasksReducer(startState, addTaskTC.fulfilled({newTask},'',{todolistId:newTask.id, title:newTask.title}))
     expect(endState['todolistID1'].length).toBe(4)
     expect(endState['todolistID2'].length).toBe(3)
     expect(endState['todolistID1'][0].id).toBeDefined()
@@ -50,17 +60,20 @@ const newTask:tasksType={id: "4", status: TaskStatus.New, title: "Soup",todoList
 
 test('statys should be changed', () => {
 
-    const endState = tasksReducer(startState, ChangeTaskStatysAC({todolistID:"todolistID1", taskID:"1",status:TaskStatus.New}))
+    let updateModel={todolistID:"todolistID1",taskId: "1", model: {status: TaskStatus.New}}
+
+   /* const endState = tasksReducer(startState, updateTaskTC.fulfilled(updateModel,"",updateModel))
 
     expect(endState['todolistID1'][0].status).toBe(TaskStatus.New)
-    expect(endState['todolistID2'][0].status).toBe(TaskStatus.Completed)
+    expect(endState['todolistID2'][0].status).toBe(TaskStatus.Completed)*/
 
 });
 
+
 test('title should be changed', () => {
-    const endState = tasksReducer(startState, ChangeTaskTitleAC({todolistID:"todolistID1",taskID: "1",title: "false"}))
+   /* const endState = tasksReducer(startState, ChangeTaskAC({todolistID:"todolistID1",taskID: "1",{title: "false"}}))
     expect(endState['todolistID1'][0].title).toBe('false')
-    expect(endState['todolistID2'][0].title).toBe("Вино")
+    expect(endState['todolistID2'][0].title).toBe("Вино")*/
 });
 
 

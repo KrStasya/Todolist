@@ -1,5 +1,5 @@
-import {authReducer} from "../state/auth-reducer.ts";
-import { setIsLoggedInAC } from "./auth-reducer.ts";
+import {authReducer} from "../state/auth-reducer";
+import { setIsLoggedInAC } from "../state/auth-reducer";
 
 
 let startState={

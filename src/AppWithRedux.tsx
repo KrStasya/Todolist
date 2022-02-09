@@ -12,7 +12,7 @@ import {initializeAppTC, RequestStatusType} from "./state/app-reducer";
 import {ErrorSnackbar} from "./components/ErrorSnackbar/ErrorSnackbar";
 import { Login } from './features/Login/login';
 import {Navigate, Route, Routes} from "react-router-dom";
-import { logoutTC } from './state/auth-reducer.ts';
+import { logoutTC } from '../src/state/auth-reducer';
 
 
 export type TaskaType = { [key: string]: Array<tasksType> }
