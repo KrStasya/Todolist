@@ -1,5 +1,5 @@
 import { TaskaType} from "../AppWithRedux";
-import {addTodolistAC, removeTodolistAC, setTodolistAC} from "./todolist-reducer";
+import {addTodolistTC, removeTodolistTC, setTodolistTC} from "./todolist-reducer";
 import {TaskPriority, tasksApi, TaskStatus} from "../api/tasks-api";
 import {  setAppStatusAC} from "./app-reducer";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
@@ -101,13 +101,13 @@ const slice = createSlice({
     reducers: {
     },
     extraReducers: (builder)=> {
-        builder.addCase (addTodolistAC,(state,action)=>{
+        builder.addCase (addTodolistTC.fulfilled,(state,action)=>{
         state[action.payload.todolist.id]=[]
         });
-        builder.addCase (removeTodolistAC,(state,action)=>{
+        builder.addCase (removeTodolistTC.fulfilled,(state,action)=>{
         delete state[action.payload.todolistID]
         });
-        builder.addCase (setTodolistAC,(state,action)=>{
+        builder.addCase (setTodolistTC.fulfilled,(state,action)=>{
             action.payload.todolists.forEach((tl) => {
                 state[tl.id] = []
             })

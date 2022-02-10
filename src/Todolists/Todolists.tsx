@@ -45,7 +45,7 @@ export const Todolists: React.FC = () => {
         dispatch(addTodolistTC(title))
     }, [dispatch])
     const onChangeNewTaskTitle = useCallback((todolistID: string, newtitle: string) => {
-        dispatch(ChangeTodolistTitleTC(todolistID, newtitle))
+        dispatch(ChangeTodolistTitleTC({todolistId:todolistID, title:newtitle}))
     }, [dispatch])
 
     const removetask = useCallback((todolistID: string, taskID: string,) => {
